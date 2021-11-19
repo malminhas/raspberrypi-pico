@@ -6,13 +6,17 @@
 * Useful for IoT projects
 * Need to solder the header pins on
 * Accessible via Micropython or C/C++
-* Installation of Micropython involves clicking on Index.htm file then downloading .uf2 file
-* Thonny IDE for Micropython
-* Can also use CLI.  Mac setup instructions are here:
-* https://datasheets.raspberrypi.org/pico/raspberry-pi-pico-python-sdk.pdf 
+* Instructions for installing basic MicroPython are [here](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#drag-and-drop-micropython)
+* However if you are using the Pimoroni screen then you want the .uf2 file from [here](
+https://github.com/pimoroni/pimoroni-pico/releases)
+* Install [Thonny IDE](https://github.com/pimoroni/pimoroni-pico/releases) for Micropython
+* Once you have Thonny installed you can communicate with the Raspberry Pi Pico using the Stop/Restart Backend button
+* Can also use CLI.  Mac setup instructions are [here](https://datasheets.raspberrypi.org/pico/raspberry-pi-pico-python-sdk.pdf) 
 * You communicate with Pico using minicom:
+```
 $ brew install minicom
 $ minicom -b 115200 -o -D /dev/tty.usbmodem0000000000001
+```
 * Here’s how to flash the onboard LED:
 ```
 >>> from machine import Pin 
@@ -25,8 +29,9 @@ $ minicom -b 115200 -o -D /dev/tty.usbmodem0000000000001
 ...     time.sleep(0.5)
 <ENTER>
 ```
-* Thonny download from here: https://thonny.org/ 
-* Can save code locally or on Pico
+* Thonny download from [here](https://thonny.org/)
+* Can save code locally or on Pico.
+* If you copy and save a file onto Pico using Thonny as `main.py` it will launch on boot.
 
 ## GPIO
 * A GPIO pin supports only two states, high and low
@@ -86,23 +91,21 @@ while True:
 ```
 
 ## Pimoroni Display
-* https://shop.pimoroni.com/products/pico-display-pack
-* 18-bit capable 240x135 pixel IPS display
-* You need to install Pimoroni’s firmware  following the instructions here: https://github.com/UnfinishedStuff/Pimoroni_Pico_Display_Pack_documentation#quickstart-script 
+* 18-bit capable 240x135 pixel IPS display detailed [here](https://shop.pimoroni.com/products/pico-display-pack)
+* You need to install Pimoroni’s firmware  following the instructions [here](https://github.com/UnfinishedStuff/Pimoroni_Pico_Display_Pack_documentation#quickstart-script)
 * Note that when the LiPo shim is in place it must be switched ON for Thonny to detect the pico
 * Same applies when trying to flash a pico with a LiPo shim soldered in place
 * With the latest Pimoroni firmware you can use Thonny with the pico live.
 
 ## RFID reader
 * Install vanilla micropython image on your pico
-* git clone the repo here: https://github.com/sbcshop/Raspberry-Pi-Pico-RFID-Expansion
+* git clone the repo [here](https://github.com/sbcshop/Raspberry-Pi-Pico-RFID-Expansion)
 * Connect via Thonny and copy three files from lib over to pico
 * Run board_test.py
 
 ## C/C++
-* SDK details here: https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf 
-* SDK: https://github.com/raspberrypi/pico-sdk 
-* Examples: https://github.com/raspberrypi/pico-examples 
-* Extras: https://github.com/raspberrypi/pico-extras 
-* Playground: https://github.com/raspberrypi/pico-playground 
-
+* SDK details [here](https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf)
+* [SDK](https://github.com/raspberrypi/pico-sdk)
+* [Examples](https://github.com/raspberrypi/pico-examples) 
+* [Extras](https://github.com/raspberrypi/pico-extras)
+* [Playground](https://github.com/raspberrypi/pico-playground)
