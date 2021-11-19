@@ -1,4 +1,4 @@
-# bringItOn.py
+# bringItIn.py
 # ============
 #
 # pomodoro timer
@@ -76,8 +76,9 @@ setBackground(backgroundColor)
 while running:
     if state == 'idle':
         setPen(textColor)                             # Set the text color
-        display.text('Sellers', x, y, 240, 7)       # Add some text
-        display.text("bring it in!", x, y+50, 240, 3) # Add some text
+        display.text('Depop', x, y, 240, 7)       # Add some text
+        display.text('Sellers!', x+2, y+50, 240, 5)       # Add some text
+        display.text("bring it in!", x+4, y+95, 240, 3) # Add some text
         display.update()                         # Push the pixels to the screen
         #if display.is_pressed(display.BUTTON_X): # X pressed
         #    print("X pressed!")
@@ -96,13 +97,13 @@ while running:
         x += xinc
         y += yinc
         utime.sleep_ms(1)   # 1ms delay makes it nice and smooth.
-        if x > 44:
+        if x > 47:
             xinc = -1
-        elif x == 0:
+        elif x == -3:
             xinc = 1
-        if y > 60:
+        if y > 22:
             yinc = -1
-        elif y == 0:
+        elif y == -10:
             yinc = 1
         setBackground(backgroundColor)
     elif state == 'goingLive':
