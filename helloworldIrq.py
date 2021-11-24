@@ -1,9 +1,9 @@
 # helloworldIrq.py
 # ================
 #
-# Simple example that illustrates how to draw to display
-# "hello world" and interact with the buttons using
-# interrupt handling to change the colour of the text.
+# Simple example that illustrates how to draw to display "hello world" and interact 
+# with the buttons using interrupt handling to change the colour of the text.
+# Note how interrupts allow clean support for background hue increment support. 
 #
 # Display screen buffer 240 x 135 with (0,0) top left
 #
