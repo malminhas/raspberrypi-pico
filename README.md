@@ -1,4 +1,4 @@
-# Raspberry Pi Pico
+# A Raspberry Pi Pico Timer
 
 ## Introduction
 The Raspberry Pi Pico is a $4 microcontroller board released in January 2021 built around the [Raspberry Pi RP2040 microprocessor chip](https://www.raspberrypi.com/products/raspberry-pi-pico/):
@@ -50,7 +50,10 @@ Some notes on GPIO operation:
 * 12 bit ADC built into RP2040 microcontroller
 * Three channels are available via GP26_ADC0, GP26_ADC1, GP28_ADC2 
 * A fourth channel is a built-in temperature sensor
-* The following code will cycle through three LEDs connected to GPIO pins 12, 14 and 15. A button interrupt handler 
+* The code will cycle through three LEDs connected to GPIO pins 12, 14 and 15 with 330 Ohm resistors per the image. A button press interrupts the sequence.  
+
+<img src="https://user-images.githubusercontent.com/12896870/144338383-cac2ba53-0776-4541-91f6-a000f5162e43.png" width=500></a>
+
 ```
 from machine import Pin, Timer
 import utime
@@ -103,7 +106,7 @@ while True:
 ```
 
 ## Pimoroni Display Pack
-Pimoroni have a 18-bit capable 240x135 pixel IPS display detailed [here](https://shop.pimoroni.com/products/pico-display-pack) addressable via MicroPython using the Pimoroni uf2 firmware image.  To access it you will need to install Pimoroni’s firmware following the instructions [here](https://github.com/UnfinishedStuff/Pimoroni_Pico_Display_Pack_documentation#quickstart-script).  If you are powering it via a LiPo shim, it must be switched ON for Thonny to detect the Pico.  The same applies when trying to flash a pico with a LiPo shim soldered in place.  With the latest Pimoroni firmware you can use Thonny with the pico live.
+Pimoroni have a 18-bit capable 240x135 pixel IPS display detailed [here](https://shop.pimoroni.com/products/pico-display-pack) addressable via MicroPython using the Pimoroni uf2 firmware image.  To access it you will need to install Pimoroni’s firmware following the instructions [here](https://github.com/UnfinishedStuff/Pimoroni_Pico_Display_Pack_documentation#quickstart-script).  If you are powering it via a LiPo shim, it must be switched ON for Thonny to detect the Pico.  The same applies when trying to flash a pico with a LiPo shim soldered in place.  With the latest Pimoroni firmware you can use Thonny with the Pico live.
 
 ## Pimoroni Network Pack
 Pimoroni have a WiFi network pack for Pico available [here](https://shop.pimoroni.com/products/pico-wireless-pack) addressable via MicroPython using the Pimoroni uf2 image.  The following code will 
