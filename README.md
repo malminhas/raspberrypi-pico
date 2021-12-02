@@ -11,7 +11,7 @@ The Raspberry Pi Pico can be programmed using either C++ or MicroPython.  The la
 
 > MicroPython is packed full of advanced features such as an interactive prompt, arbitrary precision integers, closures, list comprehension, generators, exception handling and more. Yet it is compact enough to fit and run within just 256k of code space and 16k of RAM.
 
-<img src="https://user-images.githubusercontent.com/12896870/144333163-72cc7bda-c286-42b2-b9f1-2f592c1003ec.png" height=500></img>
+<img src="https://user-images.githubusercontent.com/12896870/144333163-72cc7bda-c286-42b2-b9f1-2f592c1003ec.png" height=400></img>
 
 ## Getting started
 You can purchase Raspberry either with or without the header pins soldered.   You need to connect it to your laptop via microUSB while holding down the BOOTSEL button.  It will mount as a Mass Storage Device called RPI-RP2.  At that point you can drag and drop a MicroPython .uf2 image onto it.  Full instructions for installing basic MicroPython are [here](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#drag-and-drop-micropython).  However if you are using the Pimoroni screen or wireless board as will be the case with the examples here then you want the .uf2 file from Pimoroni [here](
@@ -35,13 +35,13 @@ Here’s how to flash the onboard LED:
 ```
 You can save code locally or on Pico.  If you copy and save a file onto Pico using Thonny as `main.py` it will launch on boot.
 
-## Pico Timer
-Two versions of helloworld are included in this repo.  The basic version uses a loop to check `display.is_pressed`.  The other uses IRQ interrupt handlers to pick up the button presses on pull up which are on pins 12,13,14,15.
+## Helloworld
+Two versions of helloworld in MicroPython are included in this repo.  The basic version [`helloworld.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/helloworld.py) uses a loop to check `display.is_pressed`.  The other version [`helloworldirq.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/helloworldIrq.py) uses IRQ interrupt handlers to pick up the button presses on pull up which are on pins 12,13,14,15.
 
 ## Pico Timer
-This is a pomodoro timer with a floating screensaver.  You can invert the display by toggling between buttons B and A.  You trigger the timer by clicking the Y button and then exit back to screensaver by clicking X.
+[`bringItIn.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/bringItIn.py) is a pomodoro timer in MicroPython with a floating screensaver.  You can invert the display by toggling between buttons B and A.  You trigger the timer by clicking the Y button and then exit back to screensaver by clicking X.
 
-
+<a href="https://youtu.be/h-EeKiQ1Ww8"><img src="https://user-images.githubusercontent.com/12896870/144336860-74f29e23-a409-4abb-972d-610b2f2aafa5.png" width="500"/></a>
 
 ## GPIO
 Some notes on GPIO operation:
@@ -102,10 +102,10 @@ while True:
     cycle_lights(0,1,0,1)
 ```
 
-## Pimoroni Display
+## Pimoroni Display Pack
 Pimoroni have a 18-bit capable 240x135 pixel IPS display detailed [here](https://shop.pimoroni.com/products/pico-display-pack) addressable via MicroPython using the Pimoroni uf2 firmware image.  To access it you will need to install Pimoroni’s firmware following the instructions [here](https://github.com/UnfinishedStuff/Pimoroni_Pico_Display_Pack_documentation#quickstart-script).  If you are powering it via a LiPo shim, it must be switched ON for Thonny to detect the Pico.  The same applies when trying to flash a pico with a LiPo shim soldered in place.  With the latest Pimoroni firmware you can use Thonny with the pico live.
 
-## Pimoroni Network 
+## Pimoroni Network Pack
 Pimoroni have a WiFi network pack for Pico available [here](https://shop.pimoroni.com/products/pico-wireless-pack) addressable via MicroPython using the Pimoroni uf2 image.  The following code will 
 ```
 import picowireless
@@ -124,7 +124,7 @@ while True:
 ```
 
 ## RFID reader
-Instructions for how to use
+Instructions for how to use:
 * Install vanilla micropython image on your pico
 * git clone the repo [here](https://github.com/sbcshop/Raspberry-Pi-Pico-RFID-Expansion)
 * Connect via Thonny and copy three files from lib over to pico
@@ -132,7 +132,7 @@ Instructions for how to use
 
 ## C/C++
 Some notes:
-* SDK details [here](https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf)
+* Getting started details [here](https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf)
 * [SDK](https://github.com/raspberrypi/pico-sdk)
 * [Examples](https://github.com/raspberrypi/pico-examples) 
 * [Extras](https://github.com/raspberrypi/pico-extras)
