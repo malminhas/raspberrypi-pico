@@ -1,27 +1,61 @@
 # A Raspberry Pi Pico Timer
 
-## Introduction
+## What's in this repository?
+This repo contains various hacks and experiments with the Raspberry Pi Pico microcontroller focussed around a Pico Display Unit that was built as a standalone piece of hardware for running Pico software.  The next section outlines how this unit was built and the main scripts run on it.  The remainder of the README contains brief notes on getting started with the Pico with MicroPython, some nice peripherals for using with it and also how to build and run C/C++ code on the Pico.
+
+### Pico Display Unit
+A Pico Display Unit is a standalone piece of kit built by soldering a LiPo shim to the header pins on the underside of a Pico then connecting a LiPo battery before plugging a Pimoroni Display Pack onto the header set.  The battery can be attached to the board using blutack as shown in the photos below in standalone form.  The LiPo shim is able to support charging the battery when a microUSB is attached.  The total cost for building one of these is £32.40 at time of writing in December 2021. 
+|Showing front top|Showing front side|
+:----------------:|:------------------:
+| <img src="https://user-images.githubusercontent.com/12896870/144763531-ad4c9f62-239f-4f30-9f47-96b49e65c25b.png" alt="Pico Display Unit" width="350"/> |<img src="https://user-images.githubusercontent.com/12896870/144763558-d9c33266-193e-47a5-920d-4cce0194b174.png" alt="Pico Display Unit" width="515"/> |
+
+The full list of parts needed to build one is contained in the following table. You will additionally need a soldering iron, solder and a USB-C to microUSB cable to connect your Mac to your unit.
+
+| Item | Price | Comments | 
+:----------------:|:----------------:|:----------------:
+| Raspberry Pi Pico board only | £3.60 | :slightly_smiling_face: |
+| Pico Stacking headers | £1.50 | If you buy a vanilla Pico, you will need to buy these and solder them to the board |
+| LiPo shim | £6.90 | Convenient way of powering your Raspberry Pi Pico from a LiPo/LiIon battery. | 
+| Pico Display Pack | £13.50 | A lovely 1.14" IPS LCD screen for Pico, with four useful buttons and a RGB LED |
+| LiPo battery | £6.90 | Standard 3.7V 500mA standard battery used in drones |
+
+### Helloworld
+Two versions of helloworld in MicroPython are available.  The basic version [`helloworld.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/helloworld.py) uses a loop to check `display.is_pressed`.  The other version [`helloworldirq.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/helloworldIrq.py) uses IRQ interrupt handlers to pick up the button presses on pull up which are on pins 12,13,14,15.  In both scripts, pressing the buttons changes the colour of the display text.  Here are a couple of photos of [`helloworld.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/helloworld.py):
+
+| Hello | World |
+:----------------:|:----------------:
+| <img src="https://user-images.githubusercontent.com/12896870/144760444-490463d5-9612-4116-a691-cffe8ede9c78.png" alt="voice tree" width="378"/> | <img src="https://user-images.githubusercontent.com/12896870/144760405-8d203a66-034e-4d40-b52b-078437cd278b.png" alt="voice tree" width="487"/> |
+
+### Pico Timer
+[`bringItIn.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/bringItIn.py) is a pomodoro timer in MicroPython designed to run on the Pico Display Unit.  In default mode it shows a floating screensaver.  You can invert the display by toggling between buttons B and A.  You trigger the timer by clicking the Y button and then exit back to screensaver by clicking X.  The following image links to a video showing it in operation: 
+
+<a href="https://youtu.be/h-EeKiQ1Ww8"><img src="https://user-images.githubusercontent.com/12896870/144336860-74f29e23-a409-4abb-972d-610b2f2aafa5.png" width="500"/></a>
+
+## Introduction to the Raspberry Pi Pico
 The Raspberry Pi Pico is a $4 microcontroller board released in January 2021 built around the [Raspberry Pi RP2040 microprocessor chip](https://www.raspberrypi.com/products/raspberry-pi-pico/):
 
-> Designed by Raspberry Pi, RP2040 features a dual-core Arm Cortex-M0+ processor with 264KB internal RAM and support for up to 16MB of off-chip Flash. A wide range of flexible I/O options includes I2C, SPI, and — uniquely — Programmable I/O (PIO). These support endless possible applications for this small and affordable package
+> Designed by Raspberry Pi, RP2040 features a dual-core Arm Cortex-M0+ processor with 264KB internal on-chip SRAM and 2MB of off-chip Flash (extensible to 16MB). A wide range of flexible I/O options includes I2C, SPI, and — uniquely — Programmable I/O (PIO). These support endless possible applications for this small and affordable package. 
 
-The Raspberry Pi Pico can be programmed using either C++ or MicroPython.  The latter is recommended for familiarisation purposes: 
+The Raspberry Pi Pico can be programmed using either C++ or MicroPython.  The latter is a recommended starting point for familiarisation purposes: 
 
 > MicroPython is a lean and efficient implementation of the Python 3 programming language that includes a small subset of the Python standard library and is optimised to run on microcontrollers and in constrained environments.
 
 > MicroPython is packed full of advanced features such as an interactive prompt, arbitrary precision integers, closures, list comprehension, generators, exception handling and more. Yet it is compact enough to fit and run within just 256k of code space and 16k of RAM.
 
-<img src="https://user-images.githubusercontent.com/12896870/144333163-72cc7bda-c286-42b2-b9f1-2f592c1003ec.png" height=400></img>
+<img src="https://user-images.githubusercontent.com/12896870/144763868-de6d30fd-3e45-43fd-b198-6f024365942b.png" height=400></img>
 
-## Getting started
-You can purchase Raspberry either with or without the header pins soldered.   You need to connect it to your laptop via microUSB while holding down the BOOTSEL button.  It will mount as a Mass Storage Device called RPI-RP2.  At that point you can drag and drop a MicroPython .uf2 image onto it.  Full instructions for installing basic MicroPython are [here](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#drag-and-drop-micropython).  However if you are using the Pimoroni screen or wireless board as will be the case with the examples here then you want the .uf2 file from Pimoroni [here](
-https://github.com/pimoroni/pimoroni-pico/releases).  Install the [Thonny IDE](https://thonny.org/) for Micropython.  Once you have Thonny installed you can communicate with the Raspberry Pi Pico using the Stop/Restart Backend button.  More details on how to address Pico from MicroPython are available in the comprehensive [here](https://datasheets.raspberrypi.org/pico/raspberry-pi-pico-python-sdk.pdf).
-It is also possible to communicate with Pico via a CLI using minicom:
+## Getting started with MicroPython
+You can purchase a Raspberry Pi Pico either with or without the header pins soldered.  In order to use it, you first need to load MicroPython firmware.  To do this connect it to your laptop via microUSB while holding down the BOOTSEL button.  It will mount as a Mass Storage Device called RPI-RP2.  At that point you can drag and drop a MicroPython .uf2 image onto it.  Full instructions for installing basic MicroPython are [here](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#drag-and-drop-micropython).  If you are using the Pimoroni screen or wireless board as will be the case with the examples above then you want the .uf2 file from Pimoroni [here](
+https://github.com/pimoroni/pimoroni-pico/releases).  Install the [Thonny IDE](https://thonny.org/) for Micropython.  Once you have Thonny installed you can communicate with the Raspberry Pi Pico using the Stop/Restart Backend button.  
+
+<img src="https://user-images.githubusercontent.com/12896870/144759371-058f1460-a6ee-4556-8a74-15a60e9b5178.png" width=900></img>
+
+More details on how to address Pico from MicroPython are available in the comprehensive [here](https://datasheets.raspberrypi.org/pico/raspberry-pi-pico-python-sdk.pdf).  It is also possible to communicate with Pico via a CLI using `minicom`.  Note that the specific tty enumeration here is likely to be different in your local context:
 ```
 $ brew install minicom
-$ minicom -b 115200 -o -D /dev/tty.usbmodem0000000000001
+$ minicom -b 115200 -o -D /dev/tty.usbmodem14301
 ```
-Here’s how to flash the onboard LED:
+On my Mac I had to do ESC-Q to exist.  This MicroPython code will to flash the onboard LED:
 ```
 >>> from machine import Pin 
 >>> led = Pin(25, Pin.OUT)
@@ -35,22 +69,14 @@ Here’s how to flash the onboard LED:
 ```
 You can save code locally or on Pico.  If you copy and save a file onto Pico using Thonny as `main.py` it will launch on boot.
 
-## Helloworld
-Two versions of helloworld in MicroPython are included in this repo.  The basic version [`helloworld.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/helloworld.py) uses a loop to check `display.is_pressed`.  The other version [`helloworldirq.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/helloworldIrq.py) uses IRQ interrupt handlers to pick up the button presses on pull up which are on pins 12,13,14,15.
-
-## Pico Timer
-[`bringItIn.py`](https://github.com/malminhas/raspberrypi-pico/blob/main/bringItIn.py) is a pomodoro timer in MicroPython with a floating screensaver.  You can invert the display by toggling between buttons B and A.  You trigger the timer by clicking the Y button and then exit back to screensaver by clicking X.
-
-<a href="https://youtu.be/h-EeKiQ1Ww8"><img src="https://user-images.githubusercontent.com/12896870/144336860-74f29e23-a409-4abb-972d-610b2f2aafa5.png" width="500"/></a>
-
-## GPIO
-Some notes on GPIO operation:
+## Pico GPIO
+The Raspberry Pi Pico has programmable General Pupose I/O (GPIO) support.  More details on the pinout is available [here](https://www.raspberrypi-spy.co.uk/2021/01/pi-pico-pinout-and-power-pins/). Some notes on GPIO operation:
 * A GPIO pin supports only two states, high and low
 * An ADC pin supports a range of values, which is determined by the input voltage applied to the pin
 * 12 bit ADC built into RP2040 microcontroller
 * Three channels are available via GP26_ADC0, GP26_ADC1, GP28_ADC2 
 * A fourth channel is a built-in temperature sensor
-* The code will cycle through three LEDs connected to GPIO pins 12, 14 and 15 with 330 Ohm resistors per the image. A button press interrupts the sequence.  
+* The following MicroPython code will cycle through three LEDs connected to GPIO pins 12, 14 and 15 with 330 Ohm resistors per the image below. A button press interrupts the sequence.  
 
 <img src="https://user-images.githubusercontent.com/12896870/144338383-cac2ba53-0776-4541-91f6-a000f5162e43.png" width=500></a>
 
@@ -106,10 +132,12 @@ while True:
 ```
 
 ## Pimoroni Display Pack
-Pimoroni have a 18-bit capable 240x135 pixel IPS display detailed [here](https://shop.pimoroni.com/products/pico-display-pack) addressable via MicroPython using the Pimoroni uf2 firmware image.  To access it you will need to install Pimoroni’s firmware following the instructions [here](https://github.com/UnfinishedStuff/Pimoroni_Pico_Display_Pack_documentation#quickstart-script).  If you are powering it via a LiPo shim, it must be switched ON for Thonny to detect the Pico.  The same applies when trying to flash a pico with a LiPo shim soldered in place.  With the latest Pimoroni firmware you can use Thonny with the Pico live.
+Pimoroni sell a 18-bit capable 240x135 pixel IPS display detailed [here](https://shop.pimoroni.com/products/pico-display-pack) which is addressable via MicroPython using the Pimoroni uf2 firmware image.  To access it you will need to install Pimoroni’s firmware following the instructions [here](https://github.com/UnfinishedStuff/Pimoroni_Pico_Display_Pack_documentation#quickstart-script).  If you are powering it via a LiPo shim soldered in place, it must be switched ON for Thonny to detect the Pico.  Incidentally the LiPo shim offers a handy way of switching the Pico on and off while holding down BOOTSEL when trying to flash a Pico.  With the latest Pimoroni firmware you can use Thonny with the Pico and all Pimoroni hardware packs with MicroPython support.
 
-## Pimoroni Network Pack
-Pimoroni have a WiFi network pack for Pico available [here](https://shop.pimoroni.com/products/pico-wireless-pack) addressable via MicroPython using the Pimoroni uf2 image.  The following code will 
+<img src="https://cdn.shopify.com/s/files/1/0174/1800/products/pico-addons-3_1024x1024.jpg" width=450/>
+
+## Pimoroni Wireless Pack
+Pimoroni also have a Wireless networking pack for Pico available [here](https://shop.pimoroni.com/products/pico-wireless-pack) again addressable via MicroPython using the standard Pimoroni uf2 image.  The Wireless pack is built around an ESP32 microcontroller which has integrated Wi-Fi and dual-mode Bluetooth.  The following code will scan the local network for WiFI SSIDs:
 ```
 import picowireless
 import time
@@ -126,12 +154,16 @@ while True:
     time.sleep(10)
 ```
 
+<img src="https://cdn.shopify.com/s/files/1/0174/1800/products/pico-addons-13_1024x1024.jpg" width=450/>
+
 ## RFID reader
-Instructions for how to use:
-* Install vanilla micropython image on your pico
+An RFID card reader is available from SB Component [here](https://shop.sb-components.co.uk/products/raspberry-pi-pico-rfid-expansion).  Instructions for how to use:
+* Install vanilla micropython image on your Pico
 * git clone the repo [here](https://github.com/sbcshop/Raspberry-Pi-Pico-RFID-Expansion)
-* Connect via Thonny and copy three files from lib over to pico
-* Run board_test.py
+* Connect via Thonny and copy three files from lib over to Pico
+* Run `board_test.py`
+
+![image](https://user-images.githubusercontent.com/12896870/144759767-a2800140-3704-457f-a927-0f6285b46ff8.png)
 
 ## C/C++
 Some notes:
