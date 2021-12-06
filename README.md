@@ -1,9 +1,7 @@
-# A Raspberry Pi Pico Timer
-
-## What's in this repository?
+# Raspberry Pi Pico Experiments
 This repo contains various hacks and experiments with the Raspberry Pi Pico microcontroller focussed around a Pico Display Unit that was built as a standalone piece of hardware for running Pico software.  The next section outlines how this unit was built and the main scripts run on it.  The remainder of the README contains brief notes on getting started with the Pico with MicroPython, some nice peripherals for using with it and also how to build and run C/C++ code on the Pico.
 
-### Pico Display Unit
+## Pico Display Unit Examples
 A Pico Display Unit is a standalone piece of kit built by soldering a LiPo shim to the header pins on the underside of a Pico then connecting a LiPo battery before plugging a Pimoroni Display Pack onto the header set.  The battery can be attached to the board using blutack as shown in the photos below in standalone form.  The LiPo shim is able to support charging the battery when a microUSB is attached.  The total cost for building one of these is £32.40 at time of writing in December 2021. 
 |Showing front top|Showing front side|
 :----------------:|:------------------:
@@ -166,9 +164,80 @@ An RFID card reader is available from SB Component [here](https://shop.sb-compon
 ![image](https://user-images.githubusercontent.com/12896870/144759767-a2800140-3704-457f-a927-0f6285b46ff8.png)
 
 ## C/C++
-Some notes:
-* Getting started details [here](https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf)
-* [SDK](https://github.com/raspberrypi/pico-sdk)
-* [Examples](https://github.com/raspberrypi/pico-examples) 
-* [Extras](https://github.com/raspberrypi/pico-extras)
-* [Playground](https://github.com/raspberrypi/pico-playground)
+### Building the Pico Examples
+Here are the steps you need to take to cross-compile, build and deploy the example code supplied with the Raspberry Pi Pico to the device:
+* Update XCode CommandLineTools from Software Update in System Preferences or run the following command.  If it doesn't work you can update to the latest CommandLineTools for Xcode 13.1 [here](https://developer.apple.com/download/all/):
+```
+$ softwareupdate --all --install --force
+```
+* Install the Pico toolchain on your Mac using Homebrew per the instructions in section 9.1 [here](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf):
+```
+$ brew install cmake 
+$ brew tap ArmMbed/homebrew-formulae 
+$ brew install arm-none-eabi-gcc
+```
+* Pull down the [Pico SDK](https://github.com/raspberrypi/pico-sdk) and [Pico Example code](https://github.com/raspberrypi/pico-examples) as well as [Pico Extras](https://github.com/raspberrypi/pico-extras) per the instructions in section 2.1 [here](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf)
+```
+$ git clone -b master https://github.com/raspberrypi/pico-sdk.git 
+$ cd pico-sdk 
+$ git submodule update --init 
+$ cd .. 
+$ git clone -b master https://github.com/raspberrypi/pico-examples.git
+$ git clone -b master https://github.com/raspberrypi/pico-extras.git
+```
+* Set up VSCode to work with the Pico toolchain.  This requires installing the CMake Tools and Cortex-Debug Extensions.
+* Follow the instructions in section 7.1 [here](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf) on how to install VSCode.
+* Open the pico-examples folder in VSCode.  In order to build you need to set the GCC target to `arm-none-eabi-gcc` and choose one of the targets in the pico-examples folder.  A good one to choose is `hello_usb`.  You can toggle between building "Debug" and "Release" executables by clicking on where it says "CMake: [Debug]: Ready" in the blue bottom bar. The default is to build a "Debug" enabled executable ready for SWD debugging.  Once everything is configured your VSCode setup will look like this:
+
+<img width="1210" alt="Pasted Graphic" src="https://user-images.githubusercontent.com/12896870/144769871-a1752267-ece7-48a5-9cf8-21a606eb1737.png">
+
+* Copy the resulting build .uf2 file over to the Pico pressing BOOTSEL button and toggling LiPo shim on/off to mount USB Mass Storage device.  
+Now run minicom to see the built file run.  If all is well you should see `printf` statements directed to USB output appear in `minicom`. To exit `minicom` press “ESC-X”:
+```
+$ minicom -b 115200 -o -D /dev/tty.usbmodem
+```
+
+### Building the Pimoroni Examples
+The steps you need to take to cross-compile, build and deploy the example code supplied by Pimoroni for their various packs is similar but requires the explicit inclusion of `pico-extras` support:
+* First you need to get the Pimoroni source code per the instructions [here](https://github.com/pimoroni/pimoroni-pico/blob/main/setting-up-the-pico-sdk.md):
+```
+$ git clone https://github.com/pimoroni/pimoroni-pico.git
+$ cd pimoroni-pico
+$ git submodule update --init
+$ mkdir build
+```
+* Now we can try to build ALL the examples from the top level `pico-pimoroni` directory.
+* We should be able to pull out the`wireless_time` example from the `build` directory for `pico_wireless` and run it.  Once running, pressing down the A button on the Pico wireless board to make the WiFi connection.  In order for it to work you have to edit the `secrets.h` in source and enter your WiFi creds in.  
+* You'll note that `pico_audio` example didn't build. In order to build build it I first tried resorting to `cmake` at the command line and passing in the absolute dir for `PICO_POST_LIST_DIRS` after updating `pico-extras`.  This seemed to work but didn't actually build the binary:
+```
+$ cd ../pico-extras
+$ git submodule update —init
+$ cd ..
+$ cmake .. -DPICO_SDK_DIR=/Desktop/CODE/PicoC/pico-sdk -DPICO_SDK_POST_LIST_DIRS=~/Desktop/CODE/PicoC/pico-extras
+```
+* There's an additional step needed.  You have to edit the top level Pimoroni `CMakeLists.txt` file per the instructions [here](https://github.com/raspberrypi/pico-extras/blob/master/README.md) to pull in the corresponding `.cmake`:
+```
+cmake_minimum_required(VERSION 3.12)
+
+# Pull in PICO SDK (must be before project)
+include(pico_sdk_import.cmake)
+# This is the EXTRA line that's needed
+include(pico_extras_import.cmake)
+
+project(pico_examples C CXX ASM)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+...
+```
+* Now you have to move over a copy of the corresponding `pico_extras_import.cmake` file to top level `pimoroni-pico` directory.
+* And finally now you can build the examples in VSCode.
+* This results in a .uf2 build file where expected in the build subtree.  Copy it over.  You hear a cheesy noise if you have the Pimoroni Audio Pack connected to your Pico via a Pico Omnibus extension board as shown below:
+
+<img src="https://user-images.githubusercontent.com/12896870/144770679-5d29fac0-e289-42f8-9d39-afcb3cd2e070.png" width=450/> 
+
+### C/C++ Debugging
+Serial Wire Debug (SWD) is a standard interface on Cortex-M-based microcontrollers which your host development machine can use to reset the board, load code into flash, and set the code running. Raspberry Pi Pico exposes the RP2040 SWD interface on three pins at the bottom edge of the board via a UART.  You'll have to connect them up to your host.  This requires that you connect the UART to your host which is easiest to do on a Raspberry Pi.  Debugging with SWD is covered in section 6 [here](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf)
+You will also need to install `openocd` debug translator and set up .vscode/launch.json and .vscode/settings.json files to use it:
+```
+$ brew install openocd
+```
