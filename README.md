@@ -46,7 +46,7 @@ The Raspberry Pi Pico can be programmed using either C++ or MicroPython.  The la
 You can purchase a Raspberry Pi Pico either with or without the header pins soldered.  In order to use it, you first need to load MicroPython firmware.  To do this connect it to your laptop via microUSB while holding down the BOOTSEL button.  It will mount as a Mass Storage Device called RPI-RP2.  At that point you can drag and drop a MicroPython .uf2 image onto it.  Full instructions for installing basic MicroPython are [here](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#drag-and-drop-micropython).  If you are using the Pimoroni screen or wireless board as will be the case with the examples above then you want the .uf2 file from Pimoroni [here](
 https://github.com/pimoroni/pimoroni-pico/releases).  Install the [Thonny IDE](https://thonny.org/) for Micropython.  Once you have Thonny installed you can communicate with the Raspberry Pi Pico using the Stop/Restart Backend button.  
 
-<img src="https://user-images.githubusercontent.com/12896870/144759371-058f1460-a6ee-4556-8a74-15a60e9b5178.png" width=900></img>
+<img src="https://user-images.githubusercontent.com/12896870/144759371-058f1460-a6ee-4556-8a74-15a60e9b5178.png" width=1210></img>
 
 More details on how to address Pico from MicroPython are available in the comprehensive [here](https://datasheets.raspberrypi.org/pico/raspberry-pi-pico-python-sdk.pdf).  It is also possible to communicate with Pico via a CLI using `minicom`.  Note that the specific tty enumeration here is likely to be different in your local context:
 ```
@@ -229,11 +229,10 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 ...
 ```
-* Now you have to move over a copy of the corresponding `pico_extras_import.cmake` file to top level `pimoroni-pico` directory.
-* And finally now you can build the examples in VSCode.
-* This results in a .uf2 build file where expected in the build subtree.  Copy it over.  You hear a cheesy noise if you have the Pimoroni Audio Pack connected to your Pico via a Pico Omnibus extension board as shown below:
+* Now you have to move over a copy of the corresponding `pico_extras_import.cmake` file to top level `pimoroni-pico` directory.  Finally you can now build the examples in VSCode.
+* This results in a .uf2 build file where expected in the build subtree.  Copy it over.  You hear a cheesy little tun if you have the Pimoroni Audio Pack connected to your Pico via a Pico Omnibus extension board as shown below and a 3.5 inch jack speaker connected to the Phones or Line Out sockets:
 
-<img src="https://user-images.githubusercontent.com/12896870/144770679-5d29fac0-e289-42f8-9d39-afcb3cd2e070.png" width=450/> 
+<img src="https://user-images.githubusercontent.com/12896870/144770679-5d29fac0-e289-42f8-9d39-afcb3cd2e070.png" width=500/>
 
 ### C/C++ Debugging
 Serial Wire Debug (SWD) is a standard interface on Cortex-M-based microcontrollers which your host development machine can use to reset the board, load code into flash, and set the code running. Raspberry Pi Pico exposes the RP2040 SWD interface on three pins at the bottom edge of the board via a UART.  You'll have to connect them up to your host.  This requires that you connect the UART to your host which is easiest to do on a Raspberry Pi.  Debugging with SWD is covered in section 6 [here](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf)
