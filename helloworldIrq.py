@@ -54,8 +54,6 @@ def Y_task(pin):
     printHelloWorld(r, g, b)         # blue
     Y_pin.irq(trigger=machine.Pin.IRQ_RISING, handler=Y_task)
 
-print(dir(display))
-print(dir(display.BUTTON_X))
 A_pin = machine.Pin(12, machine.Pin.IN, machine.Pin.PULL_UP)
 A_pin.irq(trigger=machine.Pin.IRQ_FALLING, handler=A_task)
 B_pin = machine.Pin(13, machine.Pin.IN, machine.Pin.PULL_UP)

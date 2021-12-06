@@ -27,8 +27,6 @@ def printHelloWorld(r=255, g=255, b=255, br=0, bg=0, bb=0, x=5, y=5):
     #display.character(90,120,106)
     display.update()                       # Push the pixels to the screen
 
-print(dir(display))
-print(dir(display.BUTTON_X))
 # Initialise Picodisplay with a bytearray display buffer
 WIDTH = display.get_width()
 HEIGHT = display.get_height()
