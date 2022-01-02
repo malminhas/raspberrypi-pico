@@ -229,8 +229,11 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 ...
 ```
-* Now you have to move over a copy of the corresponding `pico_extras_import.cmake` file to top level `pimoroni-pico` directory.  Finally you can now build the examples in VSCode.
-* This results in a .uf2 build file where expected in the build subtree.  Copy it over.  You hear a cheesy little tun if you have the Pimoroni Audio Pack connected to your Pico via a Pico Omnibus extension board as shown below and a 3.5 inch jack speaker connected to the Phones or Line Out sockets:
+* Now you have to move over a copy of the corresponding `pico_extras_import.cmake` file to top level `pimoroni-pico` directory.  Finally you can now build the examples in VSCode.  It's possible to target just the `audio` target in `pimoroni-pico/examples/pico_audio` as shown below in VSCode.  The corresponding `demo.cpp` file located there has been modified to play Moonlight Sonata instead of the default track.  The small Python utility included [here](moonlightSonata.py) converts piano sheet music from notes into frequencies leveraging the setup already in place for the melody and rhythm tracks using them for the right and left hand piano parts respectively:
+
+![image](https://user-images.githubusercontent.com/12896870/147891874-f1fcca7d-a321-4e4e-8b00-8ddc5bfeb78e.png)
+
+* This results in a .uf2 build file where expected in the build subtree at `pimoroni-pico/build/examples/pico-audio/audio.uf2'.  Copy this file over to the Pico.  As soon as it boots you hear a recognisable if tinny version of Beethoven's tune.  You will need to have the Pimoroni Audio Pack connected to your Pico via a Pico Omnibus extension board as shown below and a 3.5 inch jack speaker connected to the Phones output socket with Hi Gain for maximum effect.  Click on the image to see it in action:
 
 <img src="https://user-images.githubusercontent.com/12896870/144770679-5d29fac0-e289-42f8-9d39-afcb3cd2e070.png" width=500/>
 
