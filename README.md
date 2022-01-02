@@ -233,7 +233,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 ![image](https://user-images.githubusercontent.com/12896870/147891874-f1fcca7d-a321-4e4e-8b00-8ddc5bfeb78e.png)
 
-* This results in a .uf2 build file where expected in the build subtree at `pimoroni-pico/build/examples/pico-audio/audio.uf2'.  Copy this file over to the Pico.  As soon as it boots you hear a recognisable if tinny version of Beethoven's tune.  You will need to have the Pimoroni Audio Pack connected to your Pico via a Pico Omnibus extension board as shown below and a 3.5 inch jack speaker connected to the Phones output socket with Hi Gain for maximum effect.  Click on the image to see it in action:
+* This results in a .uf2 build file where expected in the build subtree at `pimoroni-pico/build/examples/pico-audio/audio.uf2`.  Copy this file over to the Pico.  As soon as it boots you hear a recognisable if tinny version of Beethoven's tune.  You will need to have the Pimoroni Audio Pack connected to your Pico via a Pico Omnibus extension board as shown below and a 3.5 inch jack speaker connected to the Phones output socket with Hi Gain for maximum effect.  Click on the image to see it in action:
 
 <img src="https://user-images.githubusercontent.com/12896870/144770679-5d29fac0-e289-42f8-9d39-afcb3cd2e070.png" width=500/>
 
