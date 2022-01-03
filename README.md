@@ -235,7 +235,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 * This results in a .uf2 build file where expected in the build subtree at `pimoroni-pico/build/examples/pico-audio/audio.uf2`.  Copy this file over to the Pico.  As soon as it boots you hear a recognisable if tinny version of Beethoven's tune.  You will need to have the Pimoroni Audio Pack connected to your Pico via a Pico Omnibus extension board as shown below and a 3.5 inch jack speaker connected to the Phones output socket with Hi Gain for maximum effect.  Click on the image to see it in action:
 
-<img src="https://user-images.githubusercontent.com/12896870/144770679-5d29fac0-e289-42f8-9d39-afcb3cd2e070.png" width=500/>
+<a href="https://youtu.be/j9-ziR0dBTk"><img src="https://user-images.githubusercontent.com/12896870/144770679-5d29fac0-e289-42f8-9d39-afcb3cd2e070.png" alt="voice tree" width=500/></a>
 
 ### C/C++ Debugging
 Serial Wire Debug (SWD) is a standard interface on Cortex-M-based microcontrollers which your host development machine can use to reset the board, load code into flash, and set the code running. Raspberry Pi Pico exposes the RP2040 SWD interface on three pins at the bottom edge of the board via a UART.  You'll have to connect them up to your host.  This requires that you connect the UART to your host which is easiest to do on a Raspberry Pi.  Debugging with SWD is covered in section 6 [here](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf)
